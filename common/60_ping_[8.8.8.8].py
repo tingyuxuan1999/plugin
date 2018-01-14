@@ -17,7 +17,8 @@ class Resource():
                 self.ip = ip
 
         def run(self):
-                ip = sys.argv[1]
+                ip = '8.8.8.8'
+
                 cmd ='ping -i 0.2 -c 3 -w 3 %s' % (ip) #ping 3次，超时3s
                 ret = commands.getoutput(cmd)
                 loss_re = re.compile(r"received, (.*) packet loss")
@@ -30,9 +31,11 @@ class Resource():
                         rtt_avg = rtt[1]
                         rtt_max = rtt[2]
                 else:
-                        rtt_min = "-"
-                        rtt_avg = "-"
-                        rtt_max = "-"
+                        rtt_min = 0
+                        rtt_avg = 0
+                        rtt_max = 0
+
+                packet_loss = packet_loss.split('%')[0]
 
                 ########## For Jmonitor ##########
                 self.resource_d={
@@ -58,6 +61,6 @@ class Resource():
                 return json.dumps()
 
 if __name__ == "__main__":
-    d = Resource(sys.argv[1]).run()
+    d = Resource('8.8.8.8').run()
     if d:
         print json.dumps(d)
