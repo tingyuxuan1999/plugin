@@ -19,7 +19,7 @@ class Resource():
         def run(self):
                 ip = '203.117.178.139'
 
-                cmd ='ping -i 0.2 -c 3 -w 3 %s' % (ip) #ping 3次，超时3s
+                cmd ='ping -c 5 -w 10 %s' % (ip) #ping 5次，超时10s
                 ret = commands.getoutput(cmd)
                 loss_re = re.compile(r"received, (.*) packet loss")
                 packet_loss = loss_re.findall(ret)[0]
